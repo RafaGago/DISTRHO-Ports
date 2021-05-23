@@ -16,25 +16,26 @@
 
 	You should have received a copy of the GPL along with this
 	program. If not, go to http://www.gnu.org/licenses/gpl.html
-	or write to the Free Software Foundation, Inc.,  
+	or write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 	==============================================================================
  */
 
-
 #if !defined(__TalEq_h)
 #define __TalEq_h
+
+#include <optional>
 
 #include "HighShelf.h"
 #include "LowShelf.h"
 #include "PeakEq.h"
 
-class TalEq 
+class TalEq
 {
 private:
-	HighShelf *highShelf;
-	LowShelf *lowShelf;
-	PeakEq *peakEq;
+	std::optional<HighShelf> highShelf;
+	std::optional<LowShelf> lowShelf;
+	std::optional<PeakEq> peakEq;
 
 	float lowShelfGain;
 	float highShelfGain;
@@ -48,7 +49,7 @@ private:
 	AudioUtils audioUtils;
 
 public:
-	TalEq(float sampleRate) 
+	TalEq(float sampleRate)
 	{
 		initialize(sampleRate);
 	}
@@ -60,19 +61,19 @@ public:
 #ifdef __MOD_DEVICES__
 	void setLowShelfGain(float lowShelfGain)
 	{
-        lowShelfGain = (lowShelfGain + 18.0 ) / 36.0;
+		lowShelfGain = (lowShelfGain + 18.0) / 36.0;
 		this->lowShelfGain = lowShelfGain;
 	}
 
 	void setHighShelfGain(float highShelfGain)
 	{
-        highShelfGain = (highShelfGain + 18.0 ) / 36.0;
+		highShelfGain = (highShelfGain + 18.0) / 36.0;
 		this->highShelfGain = highShelfGain;
 	}
 
 	void setPeakGain(float peakGain)
 	{
-        peakGain = (peakGain + 18.0 ) / 36.0;
+		peakGain = (peakGain + 18.0) / 36.0;
 		this->peakGain = peakGain;
 	}
 
@@ -124,9 +125,9 @@ public:
 
 	void initialize(float sampleRate)
 	{
-		highShelf = new HighShelf(sampleRate, 18);
-		lowShelf = new LowShelf(sampleRate, 18);
-		peakEq = new PeakEq(sampleRate, 18);
+		highShelf.emplace(sampleRate, 18);
+		lowShelf.emplace(sampleRate, 18);
+		peakEq.emplace(sampleRate, 18);
 
 		lowShelfGain = 0.5f;
 		highShelfGain = 0.5f;
@@ -137,12 +138,11 @@ public:
 		peakFrequency = 1000.0f;
 	}
 
-	void process(float *sample) 
+	void process(float *sample)
 	{
 		highShelf->tick(sample, highShelfFrequency, 1.05f, highShelfGain); // 0..0.5
-		lowShelf->tick(sample, lowShelfFrequency, 1.05f, lowShelfGain); // 0..0.5
-		peakEq->tick(sample, peakFrequency, 1.05f, peakGain); // 0..0.5
+		lowShelf->tick(sample, lowShelfFrequency, 1.05f, lowShelfGain);	   // 0..0.5
+		peakEq->tick(sample, peakFrequency, 1.05f, peakGain);			   // 0..0.5
 	}
 };
 #endif
-

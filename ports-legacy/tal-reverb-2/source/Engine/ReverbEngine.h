@@ -21,9 +21,10 @@
 	==============================================================================
  */
 
-
 #if !defined(__ReverbEngine_h)
 #define __ReverbEngine_h
+
+#include <optional>
 
 #include "Reverb.h"
 #include "AudioUtils.h"
@@ -34,13 +35,14 @@
 class ReverbEngine
 {
 public:
+	std::optional<Params> params;
 	float *param;
-	TalReverb* reverb;
+	std::optional<TalReverb> reverb;
 
-	ParamChangeUtil* dryParamChange;
-	ParamChangeUtil* wetParamChange;
+	std::optional<ParamChangeUtil> dryParamChange;
+	std::optional<ParamChangeUtil> wetParamChange;
 
-	NoiseGenerator *noiseGenerator;
+	std::optional<NoiseGenerator> noiseGenerator;
 
 	float dry;
 	float wet;
@@ -50,16 +52,13 @@ public:
 
 	ReverbEngine(float sampleRate)
 	{
-		Params *params= new Params();
-		this->param= params->parameters;
+		params.emplace();
+		this->param = params->parameters.data();
 		initialize(sampleRate);
 	}
 
 	~ReverbEngine()
 	{
-		delete reverb;
-
-		delete noiseGenerator;
 	}
 #ifdef __MOD_DEVICES__
 	void setDry(float dry)
@@ -141,24 +140,24 @@ public:
 
 	void initialize(float sampleRate)
 	{
-        if (sampleRate <= 0)
-        {
-            sampleRate = 44100.0f;
-        }
+		if (sampleRate <= 0)
+		{
+			sampleRate = 44100.0f;
+		}
 
-		reverb = new TalReverb((int)sampleRate);
+		reverb.emplace((int)sampleRate);
 
-		dryParamChange = new ParamChangeUtil(sampleRate, 300.0f);
-		wetParamChange = new ParamChangeUtil(sampleRate, 300.0f);
+		dryParamChange.emplace(sampleRate, 300.0f);
+		wetParamChange.emplace(sampleRate, 300.0f);
 
-		noiseGenerator = new NoiseGenerator(sampleRate);
+		noiseGenerator.emplace(sampleRate);
 
 		dry = 1.0f;
 		wet = 0.5f;
 		stereoWidth = 1.0f;
 	}
 
-	void process(float *sampleL, float *sampleR) 
+	void process(float *sampleL, float *sampleR)
 	{
 		// avoid cpu spikes
 		float noise = noiseGenerator->tickNoise() * 0.000000001f;
@@ -182,4 +181,3 @@ public:
 	}
 };
 #endif
-

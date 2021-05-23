@@ -21,9 +21,10 @@
 	==============================================================================
  */
 
-
 #ifndef Params_H
 #define Params_H
+
+#include <array>
 
 /*-----------------------------------------------------------------------------
 
@@ -35,9 +36,9 @@ Parameter table
 
 enum SYNTHPARAMETERS
 {
-  // Controllable values [0.0..1.0
+// Controllable values [0.0..1.0
 #ifndef __MOD_DEVICES__
-  UNUSED= 0,
+  UNUSED = 0,
 #endif
   DRY,
   WET,
@@ -63,15 +64,15 @@ enum SYNTHPARAMETERS
 
 class Params
 {
-  public:
-  float *parameters;
+public:
+  std::array<float, NUMPARAM> parameters;
 
-  Params()  {
-    parameters= new float[NUMPARAM];
-
+  Params()
+  {
     // Zero program values
-    for(int j=0; j<NUMPARAM; j++) {
-      parameters[j]= 0.0f;
+    for (int j = 0; j < NUMPARAM; j++)
+    {
+      parameters[j] = 0.0f;
     }
   }
 };
