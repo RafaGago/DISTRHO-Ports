@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -16,7 +18,7 @@
 
 	You should have received a copy of the GPL along with this
 	program. If not, go to http://www.gnu.org/licenses/gpl.html
-	or write to the Free Software Foundation, Inc.,  
+	or write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 	==============================================================================
  */
@@ -27,7 +29,9 @@
 
 #include <cstdlib>
 
-class NoiseGenerator 
+namespace artv_dsp_pull { namespace tal_reverb2 {
+
+class NoiseGenerator
 {
 public:
     int randSeed;
@@ -40,7 +44,7 @@ public:
 
 	float invertedRandomMax;
 
-	NoiseGenerator(int sampleRate) 
+	NoiseGenerator(int sampleRate)
 	{
 		// No sample rate conversion here
 		filterFactor = 5000.0f;
@@ -55,8 +59,8 @@ public:
         randSeed = rand();
 	}
 
-	// returns a random value [0..1] 
-	inline float tickNoise() 
+	// returns a random value [0..1]
+	inline float tickNoise()
 	{
 		// return ((float)(((randSeed = randSeed * 214013L + 2531011L) >> 16) & 0x7fff)/RAND_MAX);
 
@@ -66,7 +70,7 @@ public:
 	}
 
 	// returns a lp filtered random value [0..1]
-	inline float tickFilteredNoise() 
+	inline float tickFilteredNoise()
 	{
 		if (actualValue >= 1.0f)
 		{
@@ -90,10 +94,13 @@ public:
 		deltaValue *= sign;
 	}
 
-	inline float tickFilteredNoiseFast() 
+	inline float tickFilteredNoiseFast()
 	{
         actualValueFiltered = (actualValueFiltered * 1000.0f + tickNoise()) / 1001.0f;
 		return actualValueFiltered;
 	}
 };
+
+}}
+
 #endif

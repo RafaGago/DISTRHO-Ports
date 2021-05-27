@@ -1,5 +1,8 @@
+// clang-format off
+
 #include "eqdsp.h"
 
+namespace artv_dsp_pull { namespace luftikus {
 
 EqDsp::EqDsp()
 : highShelf(kHighOff),
@@ -71,12 +74,12 @@ void EqDsp::setBlockSize(int newBlockSize)
 
 void EqDsp::setSampleRate(double newSR)
 {
-	sampleRate = newSR <=  44100 ? CoeffCreator::k44100 
-		         : newSR <=  48000 ? CoeffCreator::k48000 
+	sampleRate = newSR <=  44100 ? CoeffCreator::k44100
+		         : newSR <=  48000 ? CoeffCreator::k48000
 		         : newSR <=  88200 ? CoeffCreator::k88200
-		         : newSR <=  96000 ? CoeffCreator::k96000 
-		         : newSR <= 176400 ? CoeffCreator::k176400 
-		         : newSR <= 192000 ? CoeffCreator::k192000 
+		         : newSR <=  96000 ? CoeffCreator::k96000
+		         : newSR <= 176400 ? CoeffCreator::k176400
+		         : newSR <= 192000 ? CoeffCreator::k192000
 						 : CoeffCreator::k192000;
 
 	for (int i=0; i<kNumTypes; ++i)
@@ -286,7 +289,7 @@ MultiEq::MultiEq(int numChannels)
 	for (int i=0; i<numChannels; ++i)
 		eqs.add(new EqDsp());
 }
-	
+
 void MultiEq::setGain(EqDsp::Type type, float newValue)
 {
 	for (int i=0; i<eqs.size(); ++i)
@@ -364,3 +367,5 @@ bool MultiEq::getKeepGain()
 {
 	return eqs.size() > 0 ? eqs.getUnchecked(0)->getKeepGain() : false;
 }
+
+}}

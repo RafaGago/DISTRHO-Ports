@@ -1,6 +1,10 @@
+// clang-format off
+
 #ifndef __COEFFCREATOR__
 #define __COEFFCREATOR__
 
+
+namespace artv_dsp_pull { namespace luftikus {
 
 namespace CoeffCreator
 {
@@ -16,7 +20,7 @@ namespace CoeffCreator
 		kA10k,
 		kA20k,
 		kA40k,
-	 
+
 		kNumTypes
 	};
 
@@ -28,10 +32,10 @@ namespace CoeffCreator
 		k96000,
 		k176400,
 		k192000,
-	 
+
 		kNumSamplerates
 	};
-	 
+
 	inline void setCoeffs(Type type, SampleRates sr, double* b, double* a)
 	{
 		switch (sr)
@@ -331,4 +335,7 @@ namespace CoeffCreator
 	}
 
 }
+
+}}
+
 #endif //__COEFFCREATOR__

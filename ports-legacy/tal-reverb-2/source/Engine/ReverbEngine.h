@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -31,6 +33,8 @@
 #include "Params.h"
 #include "ParamChangeUtil.h"
 #include "NoiseGenerator.h"
+
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 class ReverbEngine
 {
@@ -180,4 +184,7 @@ public:
 		*sampleR = resultR;
 	}
 };
+
+}}
+
 #endif

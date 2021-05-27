@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 ==============================================================================
 This file is part of Tal-Dub-III by Patrick Kunz.
@@ -16,7 +18,7 @@ governing rights and limitations.
 
 You should have received a copy of the GPL along with this
 program. If not, go to http://www.gnu.org/licenses/gpl.html
-or write to the Free Software Foundation, Inc.,  
+or write to the Free Software Foundation, Inc.,
 51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 ==============================================================================
 */
@@ -27,12 +29,14 @@ or write to the Free Software Foundation, Inc.,
 
 #include "math.h"
 
-class AudioUtils 
+namespace artv_dsp_pull { namespace tal_reverb2 {
+
+class AudioUtils
 {
 private:
 
 public:
-	AudioUtils() 
+	AudioUtils()
 	{
 	}
 
@@ -56,7 +60,7 @@ public:
 	float getLogScaledVolume(float inputValue, float maxValue)
 	{
 		return (expf(inputValue * maxValue * logf(20.0f)) - 1.0f) / 19.0f;
-	} 
+	}
 
 	// max value unscalled
 	float getLogScaledValue(float inputValue)
@@ -105,7 +109,7 @@ public:
 		}
 	}
 
-	inline float tanhApp(float x) 
+	inline float tanhApp(float x)
 	{
 		// Original
 		//return tanh(x);
@@ -127,7 +131,7 @@ public:
 	{
 		bool answer = true;
 		if (value == 0) value = 1;
-		for (int i = 2; i <= sqrtf((float)value) ; i++) 
+		for (int i = 2; i <= sqrtf((float)value) ; i++)
 		{
 			if (value % i == 0)
 			{
@@ -138,5 +142,7 @@ public:
 		return answer;
 	}
 };
-#endif
 
+}}
+
+#endif

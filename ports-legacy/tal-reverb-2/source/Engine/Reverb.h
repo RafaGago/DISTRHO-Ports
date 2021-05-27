@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -36,6 +38,8 @@
 #include "math.h"
 #include "AudioUtils.h"
 #include "TalEq.h"
+
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 class TalReverb
 {
@@ -266,4 +270,7 @@ public:
 		}
 	}
 };
+
+}}
+
 #endif

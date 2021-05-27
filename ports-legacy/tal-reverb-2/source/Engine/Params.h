@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -33,6 +35,7 @@ Kunz Patrick
 Parameter table
 
 -----------------------------------------------------------------------------*/
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 enum SYNTHPARAMETERS
 {
@@ -76,4 +79,6 @@ public:
     }
   }
 };
+
+}}
 #endif

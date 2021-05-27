@@ -1,3 +1,5 @@
+// clang-format off
+
 /*-----------------------------------------------------------------------------
 
 Kunz Patrick 30.04.2007
@@ -11,7 +13,9 @@ A one pole low pass filter.
 
 #include "math.h"
 
-class HighShelf 
+namespace artv_dsp_pull { namespace tal_reverb2 {
+
+class HighShelf
 {
 public:
 	int filterDecibel;
@@ -32,7 +36,7 @@ public:
 	float dBgain, freq;
 
 
-	HighShelf(float sampleRate, int filterDecibel) 
+	HighShelf(float sampleRate, int filterDecibel)
 	{
 		this->sampleRate = sampleRate;
 		this->filterDecibel = filterDecibel;
@@ -49,11 +53,11 @@ public:
 	}
 
 	// gain [0..1], q[0..1], freq[0..44100]
-	inline void tick(float *inSample, float freq, float q, float gain) 
+	inline void tick(float *inSample, float freq, float q, float gain)
 	{
 		gain = filterDecibel - (1.0f - gain) * filterDecibel * 2.0f;
 		calcCoefficients(freq, q, gain);
-		
+
 		outSample = b0*x0 + b1*x1 + b2*x2 - a1*y1 - a2*y2;
 		outSample = b0*x0 + b1*x1 + b2*x2 - a1*y1 - a2*y2;
 		updateHistory(*inSample, outSample);
@@ -106,5 +110,7 @@ public:
 		return x - 0.002f * (x + variation) * x * x;
 	}
 };
+
+}}
 
 #endif

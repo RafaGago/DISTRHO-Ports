@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -16,7 +18,7 @@
 
 	You should have received a copy of the GPL along with this
 	program. If not, go to http://www.gnu.org/licenses/gpl.html
-	or write to the Free Software Foundation, Inc.,  
+	or write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 	==============================================================================
  */
@@ -27,6 +29,8 @@
 
 #include "math.h"
 #include "AudioUtils.h"
+
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 class CombFilter
 {
@@ -78,11 +82,11 @@ public:
 		float offset = (bufferLengthDelay - 2) * delay + 1.0f;
 		readPtr1 = writePtr - (int)floorf(offset);
 
-		if (readPtr1 < 0) 
+		if (readPtr1 < 0)
 			readPtr1 += bufferLengthDelay;
 
 		readPtr2 = readPtr1 - 1;
-		if (readPtr2 < 0) 
+		if (readPtr2 < 0)
 			readPtr2 += bufferLengthDelay;
 
 		// interpolate, see paper: http://www.stanford.edu/~dattorro/EffectDesignPart2.pdf
@@ -94,7 +98,7 @@ public:
 		filterStore =  output * (1.0f - damp) + filterStore * damp;
 		buffer[writePtr] = input + (filterStore * feedback);
 
-		if (++writePtr >= bufferLengthDelay) 
+		if (++writePtr >= bufferLengthDelay)
 			writePtr = 0;
 		return output;
 	}
@@ -104,7 +108,7 @@ public:
 		float offset = (bufferLengthDelay - 2) * delay + 1.0f;
 		readPtr1 = writePtr - (int)floorf(offset);
 
-		if (readPtr1 < 0) 
+		if (readPtr1 < 0)
 			readPtr1 += bufferLengthDelay;
 
 		float output = buffer[readPtr1];
@@ -116,4 +120,7 @@ public:
 		return output;
 	}
 };
+
+}}
+
 #endif

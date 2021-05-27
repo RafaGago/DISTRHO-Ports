@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -16,7 +18,7 @@
 
 	You should have received a copy of the GPL along with this
 	program. If not, go to http://www.gnu.org/licenses/gpl.html
-	or write to the Free Software Foundation, Inc.,  
+	or write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 	==============================================================================
  */
@@ -27,6 +29,8 @@
 
 #include "math.h"
 #include "AudioUtils.h"
+
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 class AllPassFilter
 {
@@ -125,4 +129,7 @@ public:
 		return output;
 	}
 };
+
+}}
+
 #endif

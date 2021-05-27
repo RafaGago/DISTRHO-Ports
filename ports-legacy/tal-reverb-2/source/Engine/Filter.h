@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -16,7 +18,7 @@
 
 	You should have received a copy of the GPL along with this
 	program. If not, go to http://www.gnu.org/licenses/gpl.html
-	or write to the Free Software Foundation, Inc.,  
+	or write to the Free Software Foundation, Inc.,
 	51 Franklin Street, Fifth Floor, Boston, MA 02110-1301, USA.
 	==============================================================================
  */
@@ -26,6 +28,8 @@
 #define __Filter_h
 
 #include "math.h"
+
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 class Filter
 {
@@ -61,7 +65,7 @@ public:
 			fCutoff *= sampleRateFactor;
 			updateValues(fCutoff * fCutoff);
 		}
-		x = input; 
+		x = input;
 
 		// Four cascaded onepole filters (bilinear transform)
 		y1 = (x + oldx) * p - k * y1;
@@ -82,8 +86,11 @@ public:
 		f = fCutoff;										// [0 - 1]
 		k = 3.6f * f - 1.6f * f * f - 1.0f;					// (Empirical tunning) /// !!! original (convex)
 
-		p = (k + 1.0f) * 0.5f;							    // scale [0, 1] 
+		p = (k + 1.0f) * 0.5f;							    // scale [0, 1]
 		scale = expf((1.0f - p) * 1.386249f);				// original
 	}
 };
+
+}}
+
 #endif

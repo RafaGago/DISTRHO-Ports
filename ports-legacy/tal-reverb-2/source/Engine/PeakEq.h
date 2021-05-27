@@ -1,10 +1,14 @@
+// clang-format off
+
 #if !defined(__PeakEq_h)
 #define __PeakEq_h
 
 #include <stdio.h>
 #include "math.h"
 
-class PeakEq 
+namespace artv_dsp_pull { namespace tal_reverb2 {
+
+class PeakEq
 {
 public:
 	int filterDecibel;
@@ -25,7 +29,7 @@ public:
 	float dBgain, freq;
 
 
-	PeakEq(float sampleRate, int filterDecibel) 
+	PeakEq(float sampleRate, int filterDecibel)
 	{
 		this->sampleRate = sampleRate;
 		this->filterDecibel = filterDecibel;
@@ -42,11 +46,11 @@ public:
 	}
 
 	// gain [0..1], q[0..1], freq[0..44100]
-	inline void tick(float *inSample, float freq, float q, float gain) 
+	inline void tick(float *inSample, float freq, float q, float gain)
 	{
 		gain = filterDecibel - (1.0f - gain) * filterDecibel * 2.0f;
 		calcCoefficients(freq, q, gain);
-		
+
 		outSample = b0*x0 + b1*x1 + b2*x2 - a1*y1 - a2*y2;
 		outSample = b0*x0 + b1*x1 + b2*x2 - a1*y1 - a2*y2;
 		updateHistory(*inSample, outSample);
@@ -100,5 +104,7 @@ public:
 		return x - 0.002f * (x + variation) * x * x;
 	}
 };
+
+}}
 
 #endif

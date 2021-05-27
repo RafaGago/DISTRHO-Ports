@@ -1,8 +1,15 @@
+// clang-format off
+
 #ifndef __EQDSP_H_C44CCF6F__
 #define __EQDSP_H_C44CCF6F__
 
-#include "JuceHeader.h"
+//#include "JuceHeader.h"
+#include <juce_audio_processors/juce_audio_processors.h>
 #include "coeffcreator.h"
+
+namespace artv_dsp_pull { namespace luftikus {
+
+using namespace juce;
 
 class SimpleBiquad
 {
@@ -81,7 +88,7 @@ private:
 
 	double b0, b1, b2;
 	double a1, a2;
-	
+
 	double x1, x2;
 	double y1, y2;
 };
@@ -101,7 +108,7 @@ public:
 
 		kNumTypes
 	};
-	
+
 	enum HighShelf
 	{
 		kHighOff,
@@ -165,7 +172,7 @@ class MultiEq
 public:
 
 	MultiEq(int numChannels);
-	
+
 	void setGain(EqDsp::Type type, float newValue);
 	float getGain(EqDsp::Type type);
 	void setHighShelf(EqDsp::HighShelf type);
@@ -186,6 +193,6 @@ private:
 	OwnedArray<EqDsp> eqs;
 };
 
-
+}}
 
 #endif  // __EQDSP_H_C44CCF6F__

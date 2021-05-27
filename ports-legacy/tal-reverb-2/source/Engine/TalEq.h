@@ -1,3 +1,5 @@
+// clang-format off
+
 /*
 	==============================================================================
 	This file is part of Tal-Reverb by Patrick Kunz.
@@ -29,6 +31,8 @@
 #include "HighShelf.h"
 #include "LowShelf.h"
 #include "PeakEq.h"
+
+namespace artv_dsp_pull { namespace tal_reverb2 {
 
 class TalEq
 {
@@ -145,4 +149,6 @@ public:
 		peakEq->tick(sample, peakFrequency, 1.05f, peakGain);			   // 0..0.5
 	}
 };
+
+}}
 #endif
