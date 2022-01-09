@@ -27,6 +27,7 @@
 
 #include <optional>
 #include <array>
+#include <vector>
 
 #include "AllPassFilter.h"
 #include "CombFilter.h"
@@ -43,8 +44,8 @@ private:
 	static constexpr int DELAY_LINES_ALLPASS = 5;
 
 	static constexpr int MAX_PRE_DELAY_MS = 1000;
-	float* reflectionGains;
-	float* reflectionDelays;
+	std::vector<float> reflectionGains;
+	std::vector<float> reflectionDelays;
 
 	std::optional<CombFilter> combFiltersPreDelayL;
 	std::optional<CombFilter> combFiltersPreDelayR;
@@ -252,8 +253,10 @@ public:
 
 	void createDelaysAndCoefficients(int numlines, float delayLength)
 	{
-		reflectionDelays = new float[numlines];
-		reflectionGains = new float[numlines];
+		reflectionDelays.clear();
+		reflectionDelays.resize(numlines);
+		reflectionGains.clear();
+		reflectionGains.resize(numlines);
 
 		float volumeScale = (float)(-3.0 * delayLength / log10f(0.5f));
 		for (int n = numlines - 1; n >= 0; n--)

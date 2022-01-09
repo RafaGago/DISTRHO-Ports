@@ -61,7 +61,7 @@ public:
 
 	~AllPassFilter()
 	{
-		delete buffer;
+		delete[] buffer;
 	}
 
 	// all values [0..1]

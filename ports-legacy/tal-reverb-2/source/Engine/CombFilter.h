@@ -69,7 +69,7 @@ public:
 
 	~CombFilter()
 	{
-		delete buffer;
+		delete[] buffer;
 	}
 
 	// delayIntensity [0..1]
